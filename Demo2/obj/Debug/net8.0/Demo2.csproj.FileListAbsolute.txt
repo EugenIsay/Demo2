@@ -148,3 +148,4 @@ C:\Users\Class_Student\Desktop\IsayProj\Demo2\Demo2\bin\Debug\net8.0\Microsoft.E
 C:\Users\Class_Student\Desktop\IsayProj\Demo2\Demo2\bin\Debug\net8.0\Microsoft.Extensions.DependencyModel.dll
 C:\Users\Class_Student\Desktop\IsayProj\Demo2\Demo2\bin\Debug\net8.0\Mono.TextTemplating.dll
 C:\Users\Class_Student\Desktop\IsayProj\Demo2\Demo2\bin\Debug\net8.0\System.CodeDom.dll
+C:\Users\Class_Student\Desktop\IsayProj\Demo2\Demo2\obj\Debug\net8.0\Demo2.sourcelink.json

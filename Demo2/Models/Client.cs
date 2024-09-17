@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Avalonia.Media.Imaging;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Demo2.Models;
 
@@ -23,7 +25,24 @@ public partial class Client
 
     public char Gendercode { get; set; }
 
+    public string Gender { get => PublicActions.PublicContext.Genders.ToList().FirstOrDefault(g => g.Code == Gendercode).Name; }
+
     public string? Photopath { get; set; }
+
+    public Bitmap Image
+    {
+        get
+        {
+            try
+            {
+                return new Bitmap($"{Environment.CurrentDirectory}\\{Photopath}");
+            }
+            catch
+            {
+                return new Bitmap($"{Environment.CurrentDirectory}\\ClientsPhotos\\stock_photo.png");
+            }
+        }
+    }
 
     public virtual ICollection<Clientservice> Clientservices { get; set; } = new List<Clientservice>();
 

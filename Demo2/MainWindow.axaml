@@ -8,21 +8,52 @@
 	<DockPanel>
 		<TextBox DockPanel.Dock="Top"/>
 		<Grid ColumnDefinitions="*,*,*" DockPanel.Dock="Top">
-			
+			<Button HorizontalAlignment="Stretch" Content="Добавить клиента"/>
+			<ComboBox Grid.Column="1" HorizontalAlignment="Stretch">
+				
+			</ComboBox>
+			<ComboBox Grid.Column="2" HorizontalAlignment="Stretch">
+				
+			</ComboBox>
 		</Grid>
 		<Grid DockPanel.Dock="Bottom">
-			<Button HorizontalAlignment="Left"/>
+			<TextBlock/>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-				<Button/>
-				<Button/>
+				<ComboBox Name="Amount" SelectionChanged="ShownAmounChanged">
+					<ComboBoxItem>10</ComboBoxItem>
+					<ComboBoxItem>50</ComboBoxItem>
+					<ComboBoxItem>200</ComboBoxItem>
+					<ComboBoxItem>Все</ComboBoxItem>
+				</ComboBox>
+				<Button Name="Back" Content="Влево" Click="PageButton"/>
+				<Button Name="Forward" Content="Вправо" Click="PageButton"/>
 			</StackPanel>
 		</Grid>
-		<ListBox>
+		<ListBox Name="ClientsList" Margin="5">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
-					<Border BorderBrush="Black" BorderThickness="2">
-						<Grid ColumnDefinitions="">
-							
+					<Border BorderBrush="Black" BorderThickness="2" CornerRadius="1.68">
+						<Grid ColumnDefinitions="1*, 1*, 7*, 3*">
+							<TextBlock Grid.Column="1" Text="{Binding Id}" VerticalAlignment="Center"/>
+							<StackPanel Grid.Column="2">
+								<StackPanel Spacing="5" Orientation="Horizontal">
+									<TextBlock Text="{Binding Firstname}"/>
+									<TextBlock Text="{Binding Lastname}"/>
+									<TextBlock Text="{Binding Patronymic}"/>
+								</StackPanel>
+								<TextBlock Text="{Binding Gender}"/>
+								<TextBlock Text="{Binding Birthday, StringFormat='Родился(-лась) {0}.'}"/>
+								<StackPanel Orientation="Horizontal">
+									<TextBlock Text="Телефон:"/>
+									<TextBlock Text="{Binding Phone}"/>
+									<TextBlock Text="Почта:"/>
+									<TextBlock Text="{Binding Email}"/>
+								</StackPanel>
+								<TextBlock Text="{Binding Registrationdate, StringFormat='Зарегестрировался(-лась) {0}.'}"/>
+							</StackPanel>
+							<Border Grid.Column="3" Height="100">
+								<Image Source="{Binding Image}"/>
+							</Border>
 						</Grid>
 					</Border>
 				</DataTemplate>
