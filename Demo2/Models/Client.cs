@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+
 namespace Demo2.Models;
 
 public partial class Client
@@ -44,6 +45,23 @@ public partial class Client
         }
     }
 
+    public int Amount
+    {  
+        get
+        {
+            return PublicActions.PublicContext.Clientservices.Where(sc => sc.Clientid == Id).Count();
+        }
+    }
+    public string LastService
+    {
+        get
+        {
+            if (PublicActions.PublicContext.Clientservices.Where(sc => sc.Clientid == Id).Count() != 0)
+                return PublicActions.PublicContext.Clientservices.Where(sc => sc.Clientid == Id).Select(d => d.Starttime).Max().ToString();
+            else
+                return "Нет";
+        }
+    }
     public virtual ICollection<Clientservice> Clientservices { get; set; } = new List<Clientservice>();
 
     public virtual Gender GendercodeNavigation { get; set; } = null!;

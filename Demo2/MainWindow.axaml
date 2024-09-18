@@ -6,14 +6,17 @@
         x:Class="Demo2.MainWindow"
         Title="Demo2">
 	<DockPanel>
-		<TextBox DockPanel.Dock="Top"/>
+		<TextBox DockPanel.Dock="Top" TextChanged="TextBox_TextChanged"/>
 		<Grid ColumnDefinitions="*,*,*" DockPanel.Dock="Top">
 			<Button HorizontalAlignment="Stretch" Content="Добавить клиента"/>
-			<ComboBox Grid.Column="1" HorizontalAlignment="Stretch">
+			<ComboBox SelectionChanged="SFSchanged" Name="filtr" Grid.Column="1" HorizontalAlignment="Stretch">
 				
 			</ComboBox>
-			<ComboBox Grid.Column="2" HorizontalAlignment="Stretch">
-				
+			<ComboBox Name="sort" SelectionChanged="SFSchanged" Grid.Column="2" HorizontalAlignment="Stretch">
+				<ComboBoxItem>Без сортировки</ComboBoxItem>
+				<ComboBoxItem>По фамилии </ComboBoxItem>
+				<ComboBoxItem>По дате последнего посещения</ComboBoxItem>
+				<ComboBoxItem>По количеству посещений</ComboBoxItem>
 			</ComboBox>
 		</Grid>
 		<Grid DockPanel.Dock="Bottom">
@@ -32,7 +35,7 @@
 		<ListBox Name="ClientsList" Margin="5">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
-					<Border BorderBrush="Black" BorderThickness="2" CornerRadius="1.68">
+					<Border Background="#ffffe1" BorderBrush="Black" BorderThickness="2" CornerRadius="1.68">
 						<Grid ColumnDefinitions="1*, 1*, 7*, 3*">
 							<TextBlock Grid.Column="1" Text="{Binding Id}" VerticalAlignment="Center"/>
 							<StackPanel Grid.Column="2">
@@ -50,6 +53,10 @@
 									<TextBlock Text="{Binding Email}"/>
 								</StackPanel>
 								<TextBlock Text="{Binding Registrationdate, StringFormat='Зарегестрировался(-лась) {0}.'}"/>
+								<StackPanel Spacing="5" Orientation="Horizontal">
+									<TextBlock Text="{Binding LastService, StringFormat='Последнее посещение {0}.'}"/>
+									<TextBlock Text="{Binding Amount, StringFormat='Всего посещений {0}.'}"/>
+								</StackPanel>
 							</StackPanel>
 							<Border Grid.Column="3" Height="100">
 								<Image Source="{Binding Image}"/>

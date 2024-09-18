@@ -7,14 +7,20 @@ namespace Demo2
     {
         int page = 0;
         int shownAmount;
+        int f = 0;
+        int s = 0;
+        string sr = "";
         public MainWindow()
         {
             InitializeComponent();
             Amount.SelectedIndex = 0;
+            filtr.ItemsSource = PublicActions.Genders;
+            filtr.SelectedIndex = 0;
+            sort.SelectedIndex = 0;
         }
         public void ChangePage()
         {
-            ClientsList.ItemsSource = PublicActions.Clients.OrderBy(c => c.Id).Skip((page * shownAmount)).Take(shownAmount);
+            ClientsList.ItemsSource = PublicActions.Clients.ToList().Skip(page * shownAmount).Take(shownAmount);
             if (page == 0)
             {
                 Back.IsEnabled = false;
@@ -56,6 +62,29 @@ namespace Demo2
                 case 2: shownAmount = 200; break;
             }
             page = 0;
+            ChangePage();
+        }
+
+        private void SFSchanged(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)
+        {
+            if ((sender as ComboBox).Name == "filtr")
+            {
+                f = (sender as ComboBox).SelectedIndex;
+            }
+            else if ((sender as ComboBox).Name == "sort")
+            {
+                s = (sender as ComboBox).SelectedIndex;
+            }
+            page = 0;
+            PublicActions.ClientsActions(s, f, sr);
+            ChangePage();
+        }
+
+        private void TextBox_TextChanged(object? sender, Avalonia.Controls.TextChangedEventArgs e)
+        {
+            sr = (sender as TextBox).Text;
+            page = 0;
+            PublicActions.ClientsActions(s, f, sr);
             ChangePage();
         }
     }
