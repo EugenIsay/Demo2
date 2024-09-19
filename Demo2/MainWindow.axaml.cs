@@ -101,5 +101,21 @@ namespace Demo2
             new EditWindow(Int32.Parse((sender as Border).Tag.ToString())).Show();
             this.Close();
         }
+
+        private void ListBox_SelectionChanged_1(object? sender, Avalonia.Controls.SelectionChangedEventArgs e)
+        {
+            if (ClientsList.SelectedIndex != -1)
+            {
+                DeleteButton.IsVisible = true;
+            }
+            else
+            {
+                DeleteButton.IsVisible = false;
+            }
+        }
+
+        private void Delete(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+        }
     }
 }

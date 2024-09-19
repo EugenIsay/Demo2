@@ -6,6 +6,7 @@ using System;
 using Avalonia.Media.Imaging;
 using Demo2.Models;
 using System.Linq;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace Demo2;
 
@@ -19,13 +20,14 @@ public partial class EditWindow : Window
     {
         InitializeComponent();
         Gender.ItemsSource = PublicActions.PublicContext.Genders.Select(g => g.Name);
+        Id.Text = (PublicActions.PublicContext.Clients.OrderBy(c => c.Id).LastOrDefault().Id + 1).ToString();
     }
     public EditWindow(int i)
     {
         InitializeComponent();
         ImageButton.Content = "Изменить картинку";
         Gender.ItemsSource = PublicActions.PublicContext.Genders.Select(g => g.Name);
-
+        index = i;
         Client client = PublicActions.Clients.ToList().First(c => c.Id == i);
         Id.Text = client.Id.ToString();
         Lastname.Text = client.Lastname;
@@ -36,7 +38,14 @@ public partial class EditWindow : Window
         BDay.SelectedDate = DateTimeOffset.Parse(client.Birthday.ToString());
         Gender.SelectedIndex = PublicActions.PublicContext.Genders.ToList().IndexOf(PublicActions.PublicContext.Genders.ToList().First(g => g.Code == client.Gendercode));
         OldFile = client.Photopath;
-        Image.Source = new Bitmap(Environment.CurrentDirectory + "/" + OldFile);
+        try
+        {
+            Image.Source = new Bitmap(Environment.CurrentDirectory + "/" + OldFile);
+        }
+        catch
+        {
+
+        }
     }
     private async void AddImage(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
@@ -55,39 +64,45 @@ public partial class EditWindow : Window
 
     private void Comfirm(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
-        if (string.IsNullOrEmpty(Lastname.Text) || string.IsNullOrEmpty(Firstname.Text) 
-            || string.IsNullOrEmpty(Patronim.Text) || string.IsNullOrEmpty(Email.Text) 
-            || string.IsNullOrEmpty(Phone.Text)|| Gender.SelectedIndex == null || !BDay.SelectedDate.HasValue )
-        if (index != -1)
+        if (string.IsNullOrEmpty(Lastname.Text) || string.IsNullOrEmpty(Firstname.Text)
+            || string.IsNullOrEmpty(Patronim.Text) || string.IsNullOrEmpty(Email.Text)
+            || string.IsNullOrEmpty(Phone.Text) || Gender.SelectedIndex == null || !BDay.SelectedDate.HasValue)
+        {
+            return;
+        }
+        if (index == -1)
         {
             if (PublicActions.PublicContext.Clients.ToList().Where(t => t.Phone == Phone.Text).Count() != 0)
             {
                 return;
             }
-            Client client = new Client() { Lastname = Lastname.Text, Firstname = Firstname.Text, 
-                Patronymic = Patronim.Text, Email = Email.Text, Phone = Phone.Text, Birthday = DateOnly.Parse(BDay.SelectedDate.ToString()), 
-                Gendercode = PublicActions.PublicContext.Genders.ToList().First(g => g.Code == Gender.SelectedIndex).Code, Photopath = $"ClientsPhotos/{FileName}"
+            Client client = new Client() { Id = PublicActions.PublicContext.Clients.OrderBy(c => c.Id).LastOrDefault().Id + 1 ,Lastname = Lastname.Text, Firstname = Firstname.Text, 
+                Patronymic = Patronim.Text, Email = Email.Text, Phone = Phone.Text, Birthday = DateOnly.FromDateTime(BDay.SelectedDate.Value.Date), 
+                Gendercode = PublicActions.PublicContext.Genders.ToList().FirstOrDefault(g => g.Name == PublicActions.PublicContext.Genders.Select(g => g.Name).ToList()[Gender.SelectedIndex]).Code, Photopath = $"ClientsPhotos/{FileName}"
             };
             PublicActions.PublicContext.Clients.Add(client);
-            File.Copy(FileToCopy, $"{Environment.CurrentDirectory}/ClientsPhotos/{FileName}");
+            if (FileToCopy != "")
+            {
+                File.Copy(FileToCopy, $"{Environment.CurrentDirectory}/ClientsPhotos/{FileName}");
+            }
             PublicActions.PublicContext.SaveChanges();
         }
         else
         {
-            Client client = PublicActions.Clients.ToList().First(c => c.Id == index);
+            Client client = PublicActions.Clients.ToList().FirstOrDefault(c => c.Id == index);
             client.Lastname = Lastname.Text;
             client.Firstname = Firstname.Text;
             client.Patronymic = Patronim.Text;
             client.Email = Email.Text;
             client.Phone = Phone.Text;
-            client.Birthday = DateOnly.Parse(BDay.SelectedDate.ToString());
-            client.Gendercode = PublicActions.PublicContext.Genders.ToList().First(g => g.Code == Gender.SelectedIndex).Code;
-            client.Photopath = $"ClientsPhotos/{FileName}";
+            client.Birthday = DateOnly.FromDateTime(BDay.SelectedDate.Value.Date);
+            client.Gendercode = PublicActions.PublicContext.Genders.ToList().FirstOrDefault(g => g.Name == PublicActions.PublicContext.Genders.Select(g => g.Name).ToList()[Gender.SelectedIndex]).Code;
             if (FileToCopy != "")
             {
+                client.Photopath = $"ClientsPhotos/{FileName}";
                 File.Copy(FileToCopy, $"{Environment.CurrentDirectory}/ClientsPhotos/{FileName}");
-                FileInfo file = new FileInfo(OldFile);
-                file.Delete();
+                //FileInfo file = new FileInfo(OldFile);
+                //file.Delete();
             }
             PublicActions.PublicContext.Clients.Update(client);
             PublicActions.PublicContext.SaveChanges();

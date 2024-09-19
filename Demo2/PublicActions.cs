@@ -21,10 +21,7 @@ namespace Demo2
         public static void ClientsActions(int s, int f, string srch)
         {
             Clients.Clear();
-            foreach (Client client in PublicContext.Clients.ToList())
-            {
-                Clients.Add(client);
-            }
+            Clients = PublicContext.Clients.ToList();
 
             switch (s)
             {
@@ -51,7 +48,6 @@ namespace Demo2
             {
                 Clients = Clients.Where(c => c.Firstname.ToLower().Contains(word.ToLower()) || c.Lastname.ToLower().Contains(word.ToLower()) || c.Patronymic.ToLower().Contains(word.ToLower()) ||
                 c.Phone.ToLower().Contains(word.ToLower()) || c.Email.ToLower().Contains(word.ToLower())).ToList();
-
             }
             ShowmClientAmount = $"{Clients.Count}/{PublicContext.Clients.ToList().Count()}";
 

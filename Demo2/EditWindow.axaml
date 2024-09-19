@@ -2,19 +2,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
         x:Class="Demo2.EditWindow"
         Title="EditWindow">
 	<DockPanel>
 		<Button DockPanel.Dock="Bottom" Content="Готово" Click="Comfirm"/>
 		<Grid ColumnDefinitions="2*, 4*">
-			<DockPanel>
-				<Button Name="ImageButton" Content="Добавить картинку" Click="AddImage" DockPanel.Dock="Bottom"/>
-				<Border BorderBrush="Black" BorderThickness="2" Margin="25">
-					<Image Name="Image"/>
-				</Border>
-			</DockPanel>
-			<Grid Grid.Column="2" ColumnDefinitions="1*, 4*" RowDefinitions="*,*,*,*,*,*,*,*">
+				<Grid ColumnDefinitions="*,*,*,*" RowDefinitions="*,*,*,*">
+					<Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2" >
+						<Image Name="Image"/>
+					</Border>
+					<Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Name="ImageButton" Content="Добавить картинку" Click="AddImage" DockPanel.Dock="Bottom"/>
+				</Grid>
+			<Grid Grid.Column="2"  ColumnDefinitions="1*, 4*" RowDefinitions="*,*,*,*,*,*,*,*">
 				<TextBlock Grid.Column="0" Grid.Row="0" Text="Id:"/>
 				<TextBlock Grid.Column="0" Grid.Row="1" Text="Фамилия"/>
 				<TextBlock Grid.Column="0" Grid.Row="2" Text="Имя"/>
@@ -29,7 +29,7 @@
 				<TextBox Grid.Column="1" Grid.Row="3" Name="Patronim" Watermark="Отчество клиента" HorizontalAlignment="Stretch"/>
 				<TextBox Grid.Column="1" Grid.Row="4" Name="Email" Watermark="Почта клиента" HorizontalAlignment="Stretch"/>
 				<TextBox Grid.Column="1" Grid.Row="5" Name="Phone" Watermark="Телефон клиента" HorizontalAlignment="Stretch"/>
-				<DatePicker Background="#ffffe1" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="6" Name="BDay" HorizontalAlignment="Stretch"/>
+				<DatePicker HorizontalAlignment="Stretch" Background="#ffffe1" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="6" Name="BDay" />
 				<ComboBox Grid.Column="1" Grid.Row="7" Name="Gender" />
 			</Grid>
 		</Grid>

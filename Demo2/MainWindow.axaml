@@ -2,7 +2,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+		WindowStartupLocation="CenterScreen"
+		WindowState="Maximized"
+		MinHeight="305"
+		MinWidth="600"
         x:Class="Demo2.MainWindow"
         Title="Demo2">
 	<DockPanel>
@@ -18,9 +22,10 @@
 				<ComboBoxItem>По количеству посещений</ComboBoxItem>
 			</ComboBox>
 		</Grid>
-		<Grid DockPanel.Dock="Bottom">
-			<TextBlock Name="show"/>
-			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+		<Grid ColumnDefinitions="*,*,*" DockPanel.Dock="Bottom">
+			<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Name="show"/>
+			<Button HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="1" Content="Удалить выбранный элемент" IsVisible="False" Name="DeleteButton" Click="Delete"/>
+			<StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
 				<ComboBox Name="Amount" SelectionChanged="ShownAmounChanged">
 					<ComboBoxItem>10</ComboBoxItem>
 					<ComboBoxItem>50</ComboBoxItem>
@@ -31,13 +36,13 @@
 				<Button Name="Forward" Content="Вправо" Click="PageButton"/>
 			</StackPanel>
 		</Grid>
-		<ListBox Name="ClientsList" Margin="5">
+		<ListBox SelectionMode="Single" SelectionChanged="ListBox_SelectionChanged_1" Name="ClientsList" Margin="5">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
 					<Border Tag="{Binding Id}" DoubleTapped="Border_DoubleTapped" Background="#ffffe1" BorderBrush="Black" BorderThickness="2" CornerRadius="1.68">
 						<Grid ColumnDefinitions="1*, 1*, 7*, 3*">
 							<TextBlock Grid.Column="1" Text="{Binding Id}" VerticalAlignment="Center"/>
-							<StackPanel Grid.Column="2">
+							<StackPanel VerticalAlignment="Center" Grid.Column="2">
 								<StackPanel Spacing="5" Orientation="Horizontal">
 									<TextBlock Text="{Binding Firstname}"/>
 									<TextBlock Text="{Binding Lastname}"/>
@@ -57,9 +62,11 @@
 									<TextBlock Text="{Binding Amount, StringFormat='Всего посещений {0}.'}"/>
 								</StackPanel>
 							</StackPanel>
-							<Border Grid.Column="3" Height="100">
-								<Image Source="{Binding Image}"/>
-							</Border>
+							<Grid Grid.Column="3" ColumnDefinitions="*,*,*,*" RowDefinitions="*,*,*,*">
+								<Border Grid.Column="1" Grid.ColumnSpan="2" Margin="15" Grid.Row="1" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="2" >
+									<Image Source="{Binding Image}"/>
+								</Border>
+							</Grid>
 						</Grid>
 					</Border>
 				</DataTemplate>
