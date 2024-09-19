@@ -6,6 +6,7 @@
 
     <Application.Styles>
         <FluentTheme />
+		<StyleInclude Source="avares://Avalonia.Controls.ColorPicker/Themes/Simple/Simple.xaml" />
 		<Style Selector="ComboBox">
 			<Setter Property="Margin" Value="5"/>
 			<Setter Property="Background" Value="#ffffe1"/>

@@ -15,13 +15,13 @@ namespace Demo2
     public static class PublicActions
     {
         public static IsajkinContext PublicContext = new IsajkinContext();
-        public static List<Client> Clients = PublicContext.Clients.ToList();
+        public static List<Client> Clients = PublicContext.Clients.Include(x=>x.Tags).ToList();
         public static List<String> Genders = new List<string>() { "Все типы" }.Concat(PublicContext.Genders.ToList().Select(g => g.Name).ToList()).ToList();
         public static string ShowmClientAmount = $"{Clients.Count}/{PublicContext.Clients.ToList().Count()}";
         public static void ClientsActions(int s, int f, string srch)
         {
             Clients.Clear();
-            Clients = PublicContext.Clients.ToList();
+            Clients = PublicContext.Clients.Include(x => x.Tags).ToList();
 
             switch (s)
             {

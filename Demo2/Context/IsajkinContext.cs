@@ -88,7 +88,7 @@ public partial class IsajkinContext : DbContext
                     r => r.HasOne<Tag>().WithMany()
                         .HasForeignKey("Tagid")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("fk_tagofclient_tag"),
+                        .HasConstraintName("tagofclient_tag_fk"),
                     l => l.HasOne<Client>().WithMany()
                         .HasForeignKey("Clientid")
                         .OnDelete(DeleteBehavior.ClientSetNull)
@@ -323,9 +323,11 @@ public partial class IsajkinContext : DbContext
 
             entity.ToTable("tag", "task16-09");
 
-            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
             entity.Property(e => e.Color)
-                .HasMaxLength(6)
+                .HasMaxLength(8)
                 .IsFixedLength()
                 .HasColumnName("color");
             entity.Property(e => e.Title)

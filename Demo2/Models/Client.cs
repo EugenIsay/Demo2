@@ -46,7 +46,7 @@ public partial class Client
     }
 
     public int Amount
-    {  
+    {
         get
         {
             return PublicActions.PublicContext.Clientservices.Where(sc => sc.Clientid == Id).Count();

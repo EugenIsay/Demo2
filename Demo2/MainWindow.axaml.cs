@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using Demo2.Models;
 using System;
 using System.Linq;
 
@@ -14,8 +15,8 @@ namespace Demo2
         public MainWindow()
         {
             InitializeComponent();
-            Amount.SelectedIndex = 0;
             filtr.ItemsSource = PublicActions.Genders;
+            Amount.SelectedIndex = 0;
             filtr.SelectedIndex = 0;
             sort.SelectedIndex = 0;
         }
@@ -116,6 +117,12 @@ namespace Demo2
 
         private void Delete(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
+            PublicActions.PublicContext.Clients.Remove(ClientsList.SelectedItem as Client);
+            PublicActions.PublicContext.SaveChanges();
+            page = 0;
+            f = 0;
+            s = 0;
+            PublicActions.ClientsActions(s, f, sr);
         }
     }
 }

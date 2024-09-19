@@ -3,10 +3,17 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="1920" d:DesignHeight="1080"
+		MinHeight="360"
+		MinWidth="570"
         x:Class="Demo2.EditWindow"
         Title="EditWindow">
 	<DockPanel>
-		<Button DockPanel.Dock="Bottom" Content="Готово" Click="Comfirm"/>
+		<Grid DockPanel.Dock="Bottom">
+			<Button  Content="Готово" Click="Comfirm"/>
+			<Button HorizontalAlignment="Right"  Content="Добавить Тег" Click="AddTag"/>
+
+		</Grid>
+		
 		<Grid ColumnDefinitions="2*, 4*">
 				<Grid ColumnDefinitions="*,*,*,*" RowDefinitions="*,*,*,*">
 					<Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2" >
@@ -14,7 +21,7 @@
 					</Border>
 					<Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Name="ImageButton" Content="Добавить картинку" Click="AddImage" DockPanel.Dock="Bottom"/>
 				</Grid>
-			<Grid Grid.Column="2"  ColumnDefinitions="1*, 4*" RowDefinitions="*,*,*,*,*,*,*,*">
+			<Grid Grid.Column="2"  ColumnDefinitions="1*, 4*" RowDefinitions="*,*,*,*,*,*,*,*,1.5*">
 				<TextBlock Grid.Column="0" Grid.Row="0" Text="Id:"/>
 				<TextBlock Grid.Column="0" Grid.Row="1" Text="Фамилия"/>
 				<TextBlock Grid.Column="0" Grid.Row="2" Text="Имя"/>
@@ -23,6 +30,7 @@
 				<TextBlock Grid.Column="0" Grid.Row="5" Text="Телефон"/>
 				<TextBlock Grid.Column="0" Grid.Row="6" Text="Дата рождения"/>
 				<TextBlock Grid.Column="0" Grid.Row="7" Text="Пол"/>
+				<TextBlock Grid.Column="0" Grid.Row="8" Text="Тэги пользователя"/>
 				<TextBlock Grid.Column="1" Grid.Row="0" Name="Id" HorizontalAlignment="Stretch"/>
 				<TextBox Grid.Column="1" Grid.Row="1" Name="Lastname" Watermark="Фамилия клиента" HorizontalAlignment="Stretch"/>
 				<TextBox Grid.Column="1" Grid.Row="2" Name="Firstname" Watermark="Имя клиента" HorizontalAlignment="Stretch"/>
@@ -31,6 +39,29 @@
 				<TextBox Grid.Column="1" Grid.Row="5" Name="Phone" Watermark="Телефон клиента" HorizontalAlignment="Stretch"/>
 				<DatePicker HorizontalAlignment="Stretch" Background="#ffffe1" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="6" Name="BDay" />
 				<ComboBox Grid.Column="1" Grid.Row="7" Name="Gender" />
+				<Grid Grid.Column="1" Grid.Row="8" ColumnDefinitions="5*, *">
+					<ListBox Grid.Column="0"    DockPanel.Dock="Top" Name="Extra"   ScrollViewer.HorizontalScrollBarVisibility="Visible">
+						<ListBox.ItemsPanel>
+							<ItemsPanelTemplate>
+								<VirtualizingStackPanel Orientation="Horizontal" />
+							</ItemsPanelTemplate>
+						</ListBox.ItemsPanel>
+						<ListBox.ItemTemplate>
+							<DataTemplate>
+								<Border Background="{Binding Color}" CornerRadius="3">
+									<TextBlock HorizontalAlignment="Center" Background="{Binding Color}" VerticalAlignment="Center" Text="{Binding Title}"/>
+								</Border>
+							</DataTemplate>
+						</ListBox.ItemTemplate>
+					</ListBox>
+					<Border Grid.Column="1">
+						<StackPanel>
+							<TextBlock Text="Шаблон Тега"/>
+							<TextBox Name="TagName"/>
+							<ColorPicker Name="ColorPic"/>
+						</StackPanel>
+					</Border>
+				</Grid>
 			</Grid>
 		</Grid>
 	</DockPanel>

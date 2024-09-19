@@ -61,6 +61,20 @@
 									<TextBlock Text="{Binding LastService, StringFormat='Последнее посещение {0}.'}"/>
 									<TextBlock Text="{Binding Amount, StringFormat='Всего посещений {0}.'}"/>
 								</StackPanel>
+								<ListBox ItemsSource="{Binding Tags}"  ScrollViewer.HorizontalScrollBarVisibility="Visible">
+									<ListBox.ItemsPanel>
+										<ItemsPanelTemplate>
+											<VirtualizingStackPanel Orientation="Horizontal" />
+										</ItemsPanelTemplate>
+									</ListBox.ItemsPanel>
+									<ListBox.ItemTemplate>
+										<DataTemplate>
+											<Border Background="{Binding Color}" CornerRadius="10">
+												<TextBlock Margin="5" HorizontalAlignment="Center" Background="{Binding Color}" VerticalAlignment="Center" Text="{Binding Title}"/>
+											</Border>
+										</DataTemplate>
+									</ListBox.ItemTemplate>
+								</ListBox>
 							</StackPanel>
 							<Grid Grid.Column="3" ColumnDefinitions="*,*,*,*" RowDefinitions="*,*,*,*">
 								<Border Grid.Column="1" Grid.ColumnSpan="2" Margin="15" Grid.Row="1" Grid.RowSpan="2" BorderBrush="Black" BorderThickness="2" >
