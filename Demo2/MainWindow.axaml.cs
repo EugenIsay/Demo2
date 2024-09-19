@@ -1,4 +1,5 @@
 using Avalonia.Controls;
+using System;
 using System.Linq;
 
 namespace Demo2
@@ -21,6 +22,7 @@ namespace Demo2
         public void ChangePage()
         {
             ClientsList.ItemsSource = PublicActions.Clients.ToList().Skip(page * shownAmount).Take(shownAmount);
+            show.Text = PublicActions.ShowmClientAmount;
             if (page == 0)
             {
                 Back.IsEnabled = false;
@@ -86,6 +88,18 @@ namespace Demo2
             page = 0;
             PublicActions.ClientsActions(s, f, sr);
             ChangePage();
+        }
+
+        private void Button_Click_1(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            new EditWindow().Show();
+            this.Close();
+        }
+
+        private void Border_DoubleTapped(object? sender, Avalonia.Input.TappedEventArgs e)
+        {
+            new EditWindow(Int32.Parse((sender as Border).Tag.ToString())).Show();
+            this.Close();
         }
     }
 }

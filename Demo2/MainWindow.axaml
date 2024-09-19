@@ -8,9 +8,8 @@
 	<DockPanel>
 		<TextBox DockPanel.Dock="Top" TextChanged="TextBox_TextChanged"/>
 		<Grid ColumnDefinitions="*,*,*" DockPanel.Dock="Top">
-			<Button HorizontalAlignment="Stretch" Content="Добавить клиента"/>
+			<Button HorizontalAlignment="Stretch" Content="Добавить клиента" Click="Button_Click_1"/>
 			<ComboBox SelectionChanged="SFSchanged" Name="filtr" Grid.Column="1" HorizontalAlignment="Stretch">
-				
 			</ComboBox>
 			<ComboBox Name="sort" SelectionChanged="SFSchanged" Grid.Column="2" HorizontalAlignment="Stretch">
 				<ComboBoxItem>Без сортировки</ComboBoxItem>
@@ -20,7 +19,7 @@
 			</ComboBox>
 		</Grid>
 		<Grid DockPanel.Dock="Bottom">
-			<TextBlock/>
+			<TextBlock Name="show"/>
 			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 				<ComboBox Name="Amount" SelectionChanged="ShownAmounChanged">
 					<ComboBoxItem>10</ComboBoxItem>
@@ -35,7 +34,7 @@
 		<ListBox Name="ClientsList" Margin="5">
 			<ListBox.ItemTemplate>
 				<DataTemplate>
-					<Border Background="#ffffe1" BorderBrush="Black" BorderThickness="2" CornerRadius="1.68">
+					<Border Tag="{Binding Id}" DoubleTapped="Border_DoubleTapped" Background="#ffffe1" BorderBrush="Black" BorderThickness="2" CornerRadius="1.68">
 						<Grid ColumnDefinitions="1*, 1*, 7*, 3*">
 							<TextBlock Grid.Column="1" Text="{Binding Id}" VerticalAlignment="Center"/>
 							<StackPanel Grid.Column="2">

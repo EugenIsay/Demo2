@@ -1,5 +1,7 @@
 ﻿using Demo2.Context;
 using Demo2.Models;
+using Microsoft.EntityFrameworkCore;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,7 @@ namespace Demo2
         public static IsajkinContext PublicContext = new IsajkinContext();
         public static List<Client> Clients = PublicContext.Clients.ToList();
         public static List<String> Genders = new List<string>() { "Все типы" }.Concat(PublicContext.Genders.ToList().Select(g => g.Name).ToList()).ToList();
+        public static string ShowmClientAmount = $"{Clients.Count}/{PublicContext.Clients.ToList().Count()}";
         public static void ClientsActions(int s, int f, string srch)
         {
             Clients.Clear();
@@ -50,6 +53,7 @@ namespace Demo2
                 c.Phone.ToLower().Contains(word.ToLower()) || c.Email.ToLower().Contains(word.ToLower())).ToList();
 
             }
+            ShowmClientAmount = $"{Clients.Count}/{PublicContext.Clients.ToList().Count()}";
 
         }
 
