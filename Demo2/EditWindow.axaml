@@ -11,16 +11,15 @@
 		<Grid DockPanel.Dock="Bottom">
 			<Button  Content="Готово" Click="Comfirm"/>
 			<Button HorizontalAlignment="Right"  Content="Добавить Тег" Click="AddTag"/>
-
 		</Grid>
-		
+
 		<Grid ColumnDefinitions="2*, 4*">
-				<Grid ColumnDefinitions="*,*,*,*" RowDefinitions="*,*,*,*">
-					<Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2" >
-						<Image Name="Image"/>
-					</Border>
-					<Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Name="ImageButton" Content="Добавить картинку" Click="AddImage" DockPanel.Dock="Bottom"/>
-				</Grid>
+			<Grid ColumnDefinitions="*,*,*,*" RowDefinitions="*,*,*,*">
+				<Border BorderBrush="Black" BorderThickness="2" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2" >
+					<Image Name="Image"/>
+				</Border>
+				<Button Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="3" Name="ImageButton" Content="Добавить картинку" Click="AddImage" DockPanel.Dock="Bottom"/>
+			</Grid>
 			<Grid Grid.Column="2"  ColumnDefinitions="1*, 4*" RowDefinitions="*,*,*,*,*,*,*,*,1.5*">
 				<TextBlock Grid.Column="0" Grid.Row="0" Text="Id:"/>
 				<TextBlock Grid.Column="0" Grid.Row="1" Text="Фамилия"/>
@@ -32,11 +31,11 @@
 				<TextBlock Grid.Column="0" Grid.Row="7" Text="Пол"/>
 				<TextBlock Grid.Column="0" Grid.Row="8" Text="Тэги пользователя"/>
 				<TextBlock Grid.Column="1" Grid.Row="0" Name="Id" HorizontalAlignment="Stretch"/>
-				<TextBox Grid.Column="1" Grid.Row="1" Name="Lastname" Watermark="Фамилия клиента" HorizontalAlignment="Stretch"/>
-				<TextBox Grid.Column="1" Grid.Row="2" Name="Firstname" Watermark="Имя клиента" HorizontalAlignment="Stretch"/>
-				<TextBox Grid.Column="1" Grid.Row="3" Name="Patronim" Watermark="Отчество клиента" HorizontalAlignment="Stretch"/>
+				<TextBox Grid.Column="1" Grid.Row="1" Name="Lastname" Watermark="Фамилия клиента" HorizontalAlignment="Stretch" TextChanged="TextBox_TextChanged"/>
+				<TextBox Grid.Column="1" Grid.Row="2" Name="Firstname" Watermark="Имя клиента" HorizontalAlignment="Stretch" TextChanged="TextBox_TextChanged"/>
+				<TextBox Grid.Column="1" Grid.Row="3" Name="Patronim" Watermark="Отчество клиента" HorizontalAlignment="Stretch" TextChanged="TextBox_TextChanged"/>
 				<TextBox Grid.Column="1" Grid.Row="4" Name="Email" Watermark="Почта клиента" HorizontalAlignment="Stretch"/>
-				<TextBox Grid.Column="1" Grid.Row="5" Name="Phone" Watermark="Телефон клиента" HorizontalAlignment="Stretch"/>
+				<TextBox Grid.Column="1" Grid.Row="5" Name="Phone" Watermark="Телефон клиента" HorizontalAlignment="Stretch" TextChanged="TextBox_TextChanged_1"/>
 				<DatePicker HorizontalAlignment="Stretch" Background="#ffffe1" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="6" Name="BDay" />
 				<ComboBox Grid.Column="1" Grid.Row="7" Name="Gender" />
 				<Grid Grid.Column="1" Grid.Row="8" ColumnDefinitions="5*, *">

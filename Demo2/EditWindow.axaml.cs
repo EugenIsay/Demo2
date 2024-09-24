@@ -9,16 +9,22 @@ using System.Linq;
 using System.Collections.Generic;
 using Demo2.Context;
 using Microsoft.EntityFrameworkCore;
+using System.Text.RegularExpressions;
 
 namespace Demo2;
 
 public partial class EditWindow : Window
 {
     int index = -1;
+    string checklastname = "";
+    string checkname = "";
+    string checkpat = "";
+    string checkphpone = "";
     public string FileToCopy = "";
     public string FileName = "";
     public string OldFile = "";
     List<Models.Tag> tags = new List<Models.Tag>();
+    List<Models.Tag> showntags = new List<Models.Tag>();
     public EditWindow()
     {
         InitializeComponent();
@@ -32,6 +38,8 @@ public partial class EditWindow : Window
         Gender.ItemsSource = PublicActions.PublicContext.Genders.Select(g => g.Name);
         index = i;
         Client client = PublicActions.Clients.ToList().FirstOrDefault(c => c.Id == i);
+        showntags = client.Tags.ToList();
+        Extra.ItemsSource = client.Tags;
         Id.Text = client.Id.ToString();
         Lastname.Text = client.Lastname;
         Firstname.Text = client.Firstname;
@@ -41,9 +49,6 @@ public partial class EditWindow : Window
         BDay.SelectedDate = DateTimeOffset.Parse(client.Birthday.ToString());
         Gender.SelectedIndex = PublicActions.PublicContext.Genders.ToList().IndexOf(PublicActions.PublicContext.Genders.ToList().First(g => g.Code == client.Gendercode));
         OldFile = client.Photopath;
-
-        Extra.ItemsSource = client.Tags;
-
         try
         {
             Image.Source = new Bitmap(Environment.CurrentDirectory + "/" + OldFile);
@@ -72,7 +77,7 @@ public partial class EditWindow : Window
     {
         if (string.IsNullOrEmpty(Lastname.Text) || string.IsNullOrEmpty(Firstname.Text)
             || string.IsNullOrEmpty(Patronim.Text) || string.IsNullOrEmpty(Email.Text)
-            || string.IsNullOrEmpty(Phone.Text) || Gender.SelectedIndex == null || !BDay.SelectedDate.HasValue)
+            || string.IsNullOrEmpty(Phone.Text) || Gender.SelectedIndex == null || !BDay.SelectedDate.HasValue || !Email.Text.Contains("@"))
         {
             return;
         }
@@ -164,8 +169,44 @@ public partial class EditWindow : Window
     private void AddTag(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
     {
         string a = string.Join("", ColorPic.Color.ToString().Skip(3));
-        tags.Add(new Models.Tag() { Color = a, Title = TagName.Text, Id = 2 });
+        tags.Add(new Models.Tag() { Color = "#" + a, Title = TagName.Text, Id = 2 });
+        showntags.Add(new Models.Tag() { Color = "#" + a, Title = TagName.Text, Id = 2 });
         TagName.Text = "";
+        Extra.ItemsSource = showntags;
 
+    }
+
+    private void TextBox_TextChanged(object? sender, Avalonia.Controls.TextChangedEventArgs e)
+    {
+        if (!Regex.IsMatch((sender as TextBox).Text, @"^[a-zA-Z -]+$") || (sender as TextBox).Text.Count() > 50)
+        {
+            switch ((sender as TextBox).Name.ToString())
+            {
+                case "Lastname": (sender as TextBox).Text = checklastname; break;
+                case "Firstname": (sender as TextBox).Text = checkname; break;
+                case "Patronim": (sender as TextBox).Text = checkpat; break;
+            };
+        }
+        else
+        {
+            switch ((sender as TextBox).Name.ToString())
+            {
+                case "Lastname":  checklastname = (sender as TextBox).Text; break;
+                case "Firstname": checkname = (sender as TextBox).Text; break;
+                case "Patronim": checkpat = (sender as TextBox).Text; break;
+            };
+        }
+    }
+
+    private void TextBox_TextChanged_1(object? sender, Avalonia.Controls.TextChangedEventArgs e)
+    {
+        if (!Regex.IsMatch((sender as TextBox).Text, @"^[1-9+() -]+$") )
+        {
+            (sender as TextBox).Text = checkphpone;
+        }
+        else
+        {
+            checkphpone = (sender as TextBox).Text;
+        }
     }
 }
